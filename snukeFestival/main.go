@@ -2,13 +2,14 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/thoas/go-funk"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 )
+
+const numberOfSteps = 3
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -18,7 +19,7 @@ func main() {
 		log.Fatalf("The first line of input must be an int type.\nerr: %v", err)
 	}
 
-	altar := make([][]int, 0, numberOfColumn)
+	altar := make([][]int, 0, numberOfSteps)
 	for i := 0; i < numberOfColumn+1; i++ {
 		if i == 0 {
 			continue
@@ -39,6 +40,8 @@ func main() {
 
 		altar = append(altar, row)
 	}
+}
 
-	fmt.Print(altar)
+func CountPatterns(altar [][]int) int {
+	return 0
 }
