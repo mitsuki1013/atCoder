@@ -17,6 +17,24 @@ func Test(t *testing.T) {
 			},
 			expected: 3,
 		},
+		{
+			name: "ケース2",
+			input: [][]int{
+				{1, 1, 1},
+				{2, 2, 2},
+				{3, 3, 3},
+			},
+			expected: 27,
+		},
+		{
+			name: "ケース3",
+			input: [][]int{
+				{3, 14, 159, 2, 6, 53},
+				{58, 9, 79, 323, 84, 6},
+				{2643, 383, 2, 79, 50, 288},
+			},
+			expected: 87,
+		},
 	}
 
 	for _, c := range cases {
