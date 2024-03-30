@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/thoas/go-funk"
 	"log"
 	"os"
@@ -40,24 +41,27 @@ func main() {
 
 		altar = append(altar, row)
 	}
+
+	fmt.Print(CountPatterns(altar))
 }
 
 func CountPatterns(altar [][]int) int {
-	patterns := funk.Reduce(altar, func(acc [][]int, cur []int) [][]int {
-		if len(acc) == 0 {
-			acc = append(acc, cur)
-			return acc
-		}
-
-		items := funk.FlatMap(acc[len(acc)-1], func(fixItem int) []int {
-			return funk.Filter(cur, func(item int) bool {
-				return fixItem < item
-			}).([]int)
-		}).([]int)
-
-		acc = append(acc, items)
-		return acc
-	}, [][]int{}).([][]int)
-
+	patterns := funk.Reduce(altar, logic, [][]int{}).([][]int)
 	return len(patterns[len(patterns)-1])
+}
+
+func logic(acc [][]int, cur []int) [][]int {
+	if len(acc) == 0 {
+		acc = append(acc, cur)
+		return acc
+	}
+
+	items := funk.FlatMap(acc[len(acc)-1], func(fixItem int) []int {
+		return funk.Filter(cur, func(item int) bool {
+			return fixItem < item
+		}).([]int)
+	}).([]int)
+
+	acc = append(acc, items)
+	return acc
 }
