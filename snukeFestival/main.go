@@ -52,8 +52,7 @@ func CountPatterns(altar [][]int) int {
 
 func logic(acc [][]int, cur []int) [][]int {
 	if len(acc) == 0 {
-		acc = append(acc, cur)
-		return acc
+		return append(acc, cur)
 	}
 
 	items := funk.FlatMap(acc[len(acc)-1], func(fixItem int) []int {
