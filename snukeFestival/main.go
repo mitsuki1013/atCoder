@@ -47,6 +47,9 @@ func main() {
 
 func CountPatterns(altar [][]int) int {
 	patterns := funk.Reduce(altar, logic, [][]int{}).([][]int)
+	if len(patterns) == 0 {
+		return 0
+	}
 	return len(patterns[len(patterns)-1])
 }
 
