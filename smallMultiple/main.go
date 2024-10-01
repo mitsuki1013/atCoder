@@ -3,6 +3,7 @@ package main
 import (
 	"container/list"
 	"fmt"
+	"github.com/thoas/go-funk"
 	"io"
 	"os"
 	"strconv"
@@ -27,23 +28,31 @@ func main() {
 		queue.Remove(front)
 		current := front.Value.(int)
 
-		if current%K == 0 {
-			sumOfDigits := 0
-			s := strconv.Itoa(current)
-			for _, c := range s {
-				sumOfDigits += int(c - '0')
-			}
-			fmt.Fprint(stdout, sumOfDigits, "\n")
+		isMultipleOfK := current%K == 0
+
+		if isMultipleOfK {
+			fmt.Fprint(stdout, calculateSumOfDigits(current), "\n")
 			return
 		}
 
-		for i := 0; i < 10; i++ {
-			next := current*10 + i
-			nextModK := next % K
-			if !visited[nextModK] {
-				visited[nextModK] = true
-				queue.PushBack(next)
-			}
+		enqueueNextStates(current, K, visited, queue)
+	}
+}
+
+func calculateSumOfDigits(number int) int {
+	digits := []rune(strconv.Itoa(number))
+	return int(funk.Sum(funk.Map(digits, func(r rune) int {
+		return int(r - '0')
+	})))
+}
+
+func enqueueNextStates(current int, K int, visited map[int]bool, queue *list.List) {
+	for i := 0; i < 10; i++ {
+		next := current*10 + i
+		nextModK := next % K
+		if !visited[nextModK] {
+			visited[nextModK] = true
+			queue.PushBack(next)
 		}
 	}
 }
